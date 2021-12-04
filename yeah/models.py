@@ -24,9 +24,10 @@ class QrCodes(models.Model):
 @receiver(post_save, sender=Students)
 def update_post(sender, instance, created, **kwargs):
     if created:
-        data = str(instance)
+        data = f"https://760e-82-215-103-78.ngrok.io/{Students.objects.get(passport_number=instance).id}/"
+        x=f"{Students.objects.get(passport_number=instance).id}"
         img = qrcode.make(data)
-        img.save(f"static/QrCodes/{data}.png")
+        img.save(f"static/QrCodes/{x}.png")
         QrCodes.objects.create(which=Students.objects.get(passport_number=instance),qrcodes=f"static/QrCodes/{data}.png")
 
 
